@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Valor</title>
+    <style>
+ body {
+ margin: 0;
+ font-family: roboto, sans-serif;
+ background-color: white; 
+        
+}
+
+        
+header {
+background: #4CAF50;
+padding: 20px;
+
+}
+
+.logo {
+color: white;
+font-size: 22px;
+font-weight: bold;
+text-align: center;
+}
+.card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 80%;
+           margin-left: 15px;
+      margin-top: 50px;
+
+ }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 15px;
+            width: 90%;
+            font-size: 1rem;
+        }
+
+        .buttons-container {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            
+}
+    </style>
+</head>
+<body>
+    
+<header>
+<div class="logo">Adicionar dinheiro</div>
+</header>
+<div class="card">
+        <label for="valor">Digite o valor:</label>
+        <input type="number" id="valor" placeholder="Valor">
+    </div>
+
+    <div class="buttons-container">
+        <button id="adicionar">Adicionar</button>
+        <button id="retirar">Retirar</button>
+        
+ </div>
+
+    <script>
+        function redirecionarInicio() {
+            alert("Redirecionando para a página inicial!");
+        }
+    </script>
+
+
+
+
+
+<script>
+        const adicionarButton = document.getElementById('adicionar');
+        const retirarButton = document.getElementById('retirar');
+        const valorInput = document.getElementById('valor');
+
+        let saldo = parseFloat(localStorage.getItem('saldo')) || 0;
+
+        function atualizarSaldo() {
+            localStorage.setItem('saldo', saldo);
+        }
+
+        function salvarTransacao(tipo, valor) {
+            const historico = JSON.parse(localStorage.getItem('historico')) || [];
+            historico.push(`${tipo} R$ ${valor.toFixed(2)}`);
+            localStorage.setItem('historico', JSON.stringify(historico));
+        }
+
+        adicionarButton.addEventListener('click', () => {
+            const valor = parseFloat(valorInput.value);
+            if (isNaN(valor) || valor <= 0) {
+                alert('Digite um valor válido!');
+                return;
+            }
+            saldo += valor;
+            atualizarSaldo();
+            salvarTransacao('Adicionado', valor);
+            alert(`Adicionado R$ ${valor.toFixed(2)} com sucesso!`);
+            valorInput.value = '';
+        });
+
+        retirarButton.addEventListener('click', () => {
+            const valor = parseFloat(valorInput.value);
+            if (isNaN(valor) || valor <= 0 || valor > saldo) {
+                alert('Valor inválido ou maior que o saldo disponível!');
+                return;
+            }
+            saldo -= valor;
+            atualizarSaldo();
+            salvarTransacao('Retirado', valor);
+            alert(`Retirado R$ ${valor.toFixed(2)} com sucesso!`);
+            valorInput.value = '';
+        });
+
+        function redirecionarInicio() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+</body>
+</html>

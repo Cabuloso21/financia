@@ -1,0 +1,182 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Minha Wallet</title>
+ 
+<style>
+ body {
+ margin: 0;
+ font-family: roboto, sans-serif;
+ background-color: white;
+
+}      
+
+header {
+background: #4CAF50;
+padding: 20px;
+
+}
+
+.logo {
+font-size: 22px;
+font-weight: bold;
+color: white;
+text-align: center;
+}
+
+
+        .saldo {
+            background-color: white;
+            color: #4CAF50;
+            padding: 20px;
+            text-align: absolute;
+            font-size: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+           font-weight: bold;
+   }
+
+        .nav {
+            background-color: white;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            position: sticky;
+            bottom: 0;
+            margin-top: 50px;
+        }
+
+        .nav button {
+            background-color: white;
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .nav button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+   
+
+
+.categoria {
+ 
+ margin-right: 0px; /* Para adicionar algum espaço entre os cards */
+}
+
+
+.categoria {
+ width: 300px;
+ height: 80px;
+ border: 1px solid lime;
+ margin-left: 30px;
+ margin-top: 15px;
+ justify-content: center;
+ align-items: center;
+ background: white;
+ border-radius: 10px 10px; 
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ 
+}  
+          
+ .categoria:hover {
+ background-color: none;
+   
+}
+
+.name {
+ font-size: 16px;
+ text-align: center;
+ font-weight: none;
+ color: black;
+ margin-top: 30px;
+  
+}
+
+
+
+
+ </style>
+</head>
+<body>
+ <header>
+ <div class="logo">Minha carteira</div>
+ </header>
+
+
+
+    <div class="saldo">
+        Saldo: R$ <span id="saldo">0.00</span>
+    </div>
+
+
+
+
+
+<div class="categoria" onclick="redirecionar('gastos.html')">
+ <div class="name">Compras</div>
+ </div>
+
+ <div class="categoria" onclick="redirecionar('emprestimo.html')">
+ <div class="name">Empréstimos</div>
+ </div>
+
+ <div class= "categoria" onclick="redirecionar('dividas.html')">
+ <div class="name">Dividas</div>
+ </div>
+
+ <div class= "categoria" onclick="redirecionar('extrato.html')">
+ <div class="name">Objetivos</div>
+ </div>
+
+<div class= "categoria" onclick="redirecionar('extrato.html')">
+ <div class="name">Extratos</div>
+ </div>
+
+ </div>
+
+
+
+
+
+
+
+
+
+
+    
+    <div class="nav">
+        <button onclick="redirecionar('adicionar.html')">Adicionar dinheiro</button>
+        <button onclick="redirecionar('extrato.html')">Extrato</button>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+    <script>
+        // Recuperar saldo do localStorage e exibir na página
+        const saldoElement = document.getElementById('saldo');
+        const saldo = parseFloat(localStorage.getItem('saldo')) || 0;
+        saldoElement.innerText = saldo.toFixed(2);
+
+        // Função para redirecionar para outra página
+        function redirecionar(pagina) {
+            window.location.href = pagina;
+        }
+    </script>
+</body>
+</html>

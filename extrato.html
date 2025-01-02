@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico</title>
+    <style>
+
+ body { 
+ margin: 0;
+ font-family: roboto, sans-serif;
+ background-color: white;    
+
+}
+
+ header {  
+ background: #4CAF50;
+ padding: 20px;
+
+}
+
+.logo {
+font-size: 22px;
+font-weight: bold;
+text-align: center;
+color: white;
+
+}
+
+
+    .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 80%;
+            margin-bottom: 70px; /* Espaço para evitar sobreposição com os botões */
+      margin-left: 15px;
+      margin-top: 30px;
+
+ }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            padding: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        button {
+            background-color: white;
+            color: #4CAF50;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 5px;
+       font-weight: bold;
+
+ }
+
+        button:hover {
+            background-color: white;
+        }
+
+        .buttons-container {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            background-color: white;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        
+  }
+    </style>
+</head>
+<body>
+    
+<header>
+<div class="logo">Meus extratos</div>
+</header>
+
+<div class="card">
+        <h3>Extratos</h3>
+        <ul id="historico">
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+        </ul>
+    </div>
+
+    <div class="buttons-container">
+        <button id="limpar-historico">Limpar Histórico</button>
+        <button onclick="redirecionarInicio()">Voltar</button>
+    </div>
+
+    <script>
+        function redirecionarInicio() {
+            alert("Redirecionando para a página inicial!");
+        }
+
+        // Exemplo de funcionalidade para limpar o histórico
+        document.getElementById('limpar-historico').addEventListener('click', function() {
+            const historico = document.getElementById('historico');
+            historico.innerHTML = '';
+            alert("Histórico limpo!");
+        });
+    </script>
+</body>
+</html>
+
+
+    <script>
+        const historicoList = document.getElementById('historico');
+        const limparHistoricoButton = document.getElementById('limpar-historico');
+
+        function carregarHistorico() {
+            const transacoes = JSON.parse(localStorage.getItem('historico')) || [];
+            historicoList.innerHTML = '';
+            transacoes.forEach(transacao => {
+                const li = document.createElement('li');
+                li.textContent = transacao;
+                historicoList.appendChild(li);
+            });
+        }
+
+        limparHistoricoButton.addEventListener('click', () => {
+            historicoList.innerHTML = '';
+            localStorage.removeItem('historico');
+        });
+
+        carregarHistorico();
+
+        function redirecionarInicio() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

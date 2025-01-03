@@ -1,11 +1,12 @@
  <!DOCTYPE html>
- <html lang="en">
+ <html lang="br">
  <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Minha Wallet</title>
- 
-<style>
+ <link rel="stylesheet" href="stilize.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+ <style>
  body {
  margin: 0;
  font-family: roboto, sans-serif;
@@ -13,69 +14,118 @@
 
 }      
 
-header {
-background: #4CAF50;
-padding: 20px;
+ header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 15px 0px;
+ background-color: #4CA;
+ top: 0;
+ left: 40;
+ width: 100%;
+ z-index: 1000; /* Para garantir que o cabeçalho fique acima de outros elementos */
+ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar o cabeçalho */
+ border-bottom: 1px solid #ccc;
+  
+}
+ 
+ #direcion {
+ padding: 10px 10px;
+ background-color: #4CA;
+ color: #555;
+ border: none;
+ border-radius: 5px;
+ cursor: pointer;
+ font-size: 15px;
+ font-weight: bold;
+ margin-right: 20px;
+ 
+}
 
+ #direcion:hover {
+ background-color: none; /* Cor ao passar o mouse */
+ 
 }
 
 .logo {
-font-size: 22px;
-font-weight: bold;
-color: white;
-text-align: center;
+ font-size: 25px;
+ font-weight: bolder;
+ align-items: center;
+ margin-left: 10px;
+ color: #555;
+
+}
+        
+ .logo::first-letter {
+ font-size: 25px; /* tamanho da letra L */
+ font-weight: bold;
+ color: #555;
+ align-items: center;
+ margin-left: 11px;
+
 }
 
+ .saldo::first-letter {
+ font-size: 30px; /* tamanho da letra L */
+ font-weight: bold;
+ color: #4CAF50;
+ align-items: center;
+ margin-left: 11px;
 
-        .saldo {
-            background-color: white;
-            color: #4CAF50;
-            padding: 20px;
-            text-align: absolute;
-            font-size: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-           font-weight: bold;
-   }
+}
 
-        .nav {
-            background-color: white;
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-around;
-            position: sticky;
-            bottom: 0;
-            margin-top: 50px;
-        }
+ .saldo {
+ background-color: white;
+ color: #4CA;
+ margin-top: 20px;
+ margin-bottom: 30px;
+ text-align: absolute;
+ font-size: 20px;
+ box-shadow: 0 0px 0px rgba(0, 0, 0, 0.0);
+ font-weight: bold;
+  
+}
 
-        .nav button {
-            background-color: white;
-            border: 2px solid #4CAF50;
-            color: #4CAF50;
-            padding: 10px 15px;
-            font-size: 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
+ .nav {
+ background-color: white;
+ padding: 10px 0;
+ display: flex;
+ justify-content: space-around;
+ position: sticky;
+ bottom: 0;
+ margin-top: 50px;
+ overflow-x: scroll; /* Permite rolar em telas menores */
+      
+ }
 
-        .nav button:hover {
-            background-color: #4CAF50;
-            color: white;
-        }
+ .nav button {
+ background-color: white;
+ border: 2px solid #f2f2f2;
+ color: #4CA;
+ padding: 10px 15px;
+ font-size: 1rem;
+ border-radius: 5px;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ font-weight: bold;
+        
+}
+
+ .nav button:hover {
+ background-color: #4CAF50;
+ color: white;
+        
+}
    
-
-
-.categoria {
- 
+ .categoria {
  margin-right: 0px; /* Para adicionar algum espaço entre os cards */
+
 }
 
-
-.categoria {
+ .categoria {
  width: 300px;
  height: 80px;
- border: 1px solid lime;
+ border: 1.50px solid #ccc;
  margin-left: 30px;
  margin-top: 15px;
  justify-content: center;
@@ -100,27 +150,24 @@ text-align: center;
   
 }
 
-
-
-
- </style>
+</style>
 </head>
 <body>
+ 
+
  <header>
  <div class="logo">Minha carteira</div>
+ <direcion id="direcion">Sair</direcion>
  </header>
+ </div>
+ </div>
 
-
-
-    <div class="saldo">
-        Saldo: R$ <span id="saldo">0.00</span>
-    </div>
-
-
-
-
-
-<div class="categoria" onclick="redirecionar('gastos.html')">
+ <div class="saldo">
+ Saldo: R$ <span id="saldo">0.00</span>
+ </div>
+ </div>
+ 
+ <div class="categoria" onclick="redirecionar('gastos.html')">
  <div class="name">Compras</div>
  </div>
 
@@ -136,47 +183,38 @@ text-align: center;
  <div class="name">Objetivos</div>
  </div>
 
-<div class= "categoria" onclick="redirecionar('dados.html')">
- <div class="name">Meus dados</div>
+ <div class= "categoria" onclick="redirecionar('dados.html')">
+ <div class="name">Necessidade</div>
+ </div>
  </div>
 
+ <div class="nav">
+ <button onclick="redirecionar('adicionar.html')">Adicionar dinheiro</button>
+ <button onclick="redirecionar('extrato.html')">Extrato</button>
+ <button onclick="redirecionar('dados.html')">Dados</button>
+ </div>
  </div>
 
+<script>
+document.getElementById("direcion").addEventListener("click", function() {
+window.location.href = "index.html";
+});
+</script>
 
 
 
+<script>
+ // Recuperar saldo do localStorage e exibir na página
+ const saldoElement = document.getElementById('saldo');
+ const saldo = parseFloat(localStorage.getItem('saldo')) || 0;
+ saldoElement.innerText = saldo.toFixed(2);
 
-
-
-
-
-
-    
-    <div class="nav">
-        <button onclick="redirecionar('adicionar.html')">Adicionar dinheiro</button>
-        <button onclick="redirecionar('extrato.html')">Extrato</button>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-    <script>
-        // Recuperar saldo do localStorage e exibir na página
-        const saldoElement = document.getElementById('saldo');
-        const saldo = parseFloat(localStorage.getItem('saldo')) || 0;
-        saldoElement.innerText = saldo.toFixed(2);
-
-        // Função para redirecionar para outra página
-        function redirecionar(pagina) {
-            window.location.href = pagina;
-        }
-    </script>
+ // Função para redirecionar para outra página
+ function redirecionar(pagina) {
+ window.location.href = pagina;
+        
+}
+</script>
 </body>
 </html>
+

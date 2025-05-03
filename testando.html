@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>resultado</title>
+</head>
+<body>
+  <h1>resultado</h1>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor Fluicode</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f7f7f7; }
+    textarea { width: 100%; height: 200px; }
+    button { margin-top: 10px; padding: 10px 20px; cursor: pointer; }
+    #preview { margin-top: 30px; padding: 20px; background: white; border: 1px solid #ccc; }
+    #link-container { margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <h2>Editor Fluicode</h2>
+  <textarea id="editor"></textarea><br>
+  <button id="runBtn">Executar</button>
+  <button id="saveBtn">Salvar no Firebase</button>
+
+  <div id="link-container"></div>
+
+  <div id="preview"></div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+    import { getFirestore, collection, addDoc, getDoc, doc } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCqkWODpY54YGrvqPVMABK_k_ZJLo1KXMA",
+      authDomain: "teste-cfe69.firebaseapp.com",
+      projectId: "teste-cfe69",
+      storageBucket: "teste-cfe69.appspot.com",
+      messagingSenderId: "646579509123",
+      appId: "1:646579509123:web:dd23b863dd8c54bca308b6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const editor = document.getElementById('editor');
+    const runBtn = document.getElementById('runBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const preview = document.getElementById('preview');
+    const linkContainer = document.getElementById('link-container');
+
+    function parseFluicode(code) {
+      let html = '';
+      if (code.includes('<formulário>>')) {
+        html += '<form>';
+        const fields = code.match(/<camp>(.*?)<camp>/g);
+        if (fields) {
+          fields.forEach(f => {
+            const content = f.replace(/<camp>/g, '').trim();
+            const [tipo, label] = content.split(':');
+            switch (tipo.trim()) {
+              case 'imagens': html += `<label>${label || 'Imagem'} <input type="file" multiple></label><br>`; break;
+              case 'nome': case 'numero': case 'email': case 'senha': case 'link': case 'whatsapp': case 'telefone':
+                html += `<label>${label} <input type="${tipo === 'senha' ? 'password' : 'text'}"></label><br>`; break;
+              case 'video': html += `<label>${label || 'Vídeo'} <input type="file" accept="video/*"></label><br>`; break;
+              case 'botão': html += `<button type="submit">${label}</button><br>`; break;
+            }
+          });
+        }
+        html += '</form>';
+      }
+      return html;
+    }
+
+    runBtn.onclick = () => {
+      const code = editor.value;
+      const html = parseFluicode(code);
+      preview.innerHTML = html;  // Exibe o conteúdo gerado no preview
+    };
+
+    saveBtn.onclick = async () => {
+      const code = editor.value;
+      try {
+        const docRef = await addDoc(collection(db, 'fluicode'), { code });
+        const url = `${window.location.origin}${window.location.pathname}?id=${docRef.id}`;
+        linkContainer.innerHTML = `Link gerado: <a href="${url}" target="_blank">${url}</a>`;
+        alert("Código salvo com sucesso!");
+      } catch (e) {
+        console.error("Erro ao salvar:", e);
+      }
+    };
+
+    // Carrega código ao acessar com ?id=abc123
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    if (id) {
+      (async () => {
+        const docRef = doc(db, "fluicode", id);
+        const snap = await getDoc(docRef);
+        if (snap.exists()) {
+          editor.value = snap.data().code;
+          runBtn.click();
+        } else {
+          alert("Código não encontrado!");
+        }
+      })();
+    }
+  </script>
+</body>
+</html>
